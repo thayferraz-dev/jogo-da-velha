@@ -1,0 +1,320 @@
+/* Reset & base */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #0f0f1a;
+  --surface: #1a1a2e;
+  --surface2: #16213e;
+  --border: #2a2a4a;
+  --x-color: #e94560;
+  --o-color: #0f9de8;
+  --draw-color: #f0a500;
+  --text: #e0e0f0;
+  --text-muted: #8888aa;
+  --radius: 16px;
+  --shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  max-width: 440px;
+}
+
+h1 {
+  font-size: 2.4rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  background: linear-gradient(135deg, var(--x-color), var(--o-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Placar */
+.score-board {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+
+.score-item {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  box-shadow: var(--shadow);
+}
+
+.score-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.score-value {
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--text);
+}
+
+.player-x-color { color: var(--x-color); }
+.player-o-color { color: var(--o-color); }
+.draw-color     { color: var(--draw-color); }
+
+/* Status */
+.status-bar {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  min-height: 28px;
+}
+
+.status-bar #current-player {
+  font-size: 1.2rem;
+  font-weight: 900;
+}
+
+/* Tabuleiro */
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: 100%;
+  aspect-ratio: 1;
+  background: var(--surface2);
+  padding: 10px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+
+.cell {
+  background: var(--surface);
+  border-radius: 12px;
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(2.5rem, 10vw, 4.5rem);
+  font-weight: 900;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s, border-color 0.15s;
+  user-select: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.cell:hover:not(.taken) {
+  background: #22224a;
+  border-color: #4a4a7a;
+  transform: scale(1.04);
+}
+
+.cell.taken {
+  cursor: default;
+}
+
+.cell.x {
+  color: var(--x-color);
+  border-color: rgba(233, 69, 96, 0.4);
+  animation: pop 0.2s ease;
+}
+
+.cell.o {
+  color: var(--o-color);
+  border-color: rgba(15, 157, 232, 0.4);
+  animation: pop 0.2s ease;
+}
+
+.cell.winner {
+  background: linear-gradient(135deg, rgba(233,69,96,0.15), rgba(15,157,232,0.15));
+  border-color: var(--draw-color);
+  animation: winner-pulse 0.8s ease infinite alternate;
+}
+
+.cell.winner.x {
+  background: rgba(233, 69, 96, 0.2);
+  border-color: var(--x-color);
+}
+
+.cell.winner.o {
+  background: rgba(15, 157, 232, 0.2);
+  border-color: var(--o-color);
+}
+
+@keyframes pop {
+  0%   { transform: scale(0.6); opacity: 0.5; }
+  70%  { transform: scale(1.12); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes winner-pulse {
+  from { box-shadow: 0 0 8px currentColor; }
+  to   { box-shadow: 0 0 24px currentColor; }
+}
+
+/* Botões */
+.buttons {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+
+.btn {
+  flex: 1;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.1s, opacity 0.15s;
+  letter-spacing: 0.5px;
+}
+
+.btn:hover  { opacity: 0.88; transform: translateY(-1px); }
+.btn:active { transform: translateY(1px); }
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--x-color), #c0304e);
+  color: #fff;
+}
+
+.btn-secondary {
+  background: var(--surface);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+
+/* Seletor de modo */
+.mode-selector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.mode-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.mode-btn {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 2px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.mode-btn:hover {
+  border-color: #4a4a7a;
+  color: var(--text);
+}
+
+.mode-btn.active {
+  border-color: var(--o-color);
+  color: var(--o-color);
+  background: rgba(15, 157, 232, 0.1);
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.modal-overlay.show {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 40px 32px;
+  text-align: center;
+  max-width: 320px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  animation: modal-in 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+@keyframes modal-in {
+  from { transform: scale(0.85); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+.modal-icon {
+  font-size: 4rem;
+  line-height: 1;
+}
+
+.modal h2 {
+  font-size: 1.8rem;
+  font-weight: 900;
+}
+
+.modal p {
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+.modal .btn {
+  margin-top: 8px;
+  width: 100%;
+}
+
+/* Responsivo */
+@media (max-width: 380px) {
+  h1 { font-size: 1.8rem; }
+  .score-value { font-size: 1.5rem; }
+}

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jogo da Velha</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Jogo da Velha</h1>
+
+    <div class="score-board">
+      <div class="score-item">
+        <span class="score-label player-x-color">Jogador X</span>
+        <span class="score-value" id="score-x">0</span>
+      </div>
+      <div class="score-item">
+        <span class="score-label draw-color">Empates</span>
+        <span class="score-value" id="score-draw">0</span>
+      </div>
+      <div class="score-item">
+        <span class="score-label player-o-color">Jogador O</span>
+        <span class="score-value" id="score-o">0</span>
+      </div>
+    </div>
+
+    <div class="status-bar">
+      <p id="status">Vez do Jogador <span id="current-player" class="player-x-color">X</span></p>
+    </div>
+
+    <div class="board" id="board">
+      <div class="cell" data-index="0"></div>
+      <div class="cell" data-index="1"></div>
+      <div class="cell" data-index="2"></div>
+      <div class="cell" data-index="3"></div>
+      <div class="cell" data-index="4"></div>
+      <div class="cell" data-index="5"></div>
+      <div class="cell" data-index="6"></div>
+      <div class="cell" data-index="7"></div>
+      <div class="cell" data-index="8"></div>
+    </div>
+
+    <div class="buttons">
+      <button class="btn btn-primary" id="btn-restart">Nova Partida</button>
+      <button class="btn btn-secondary" id="btn-reset-score">Zerar Placar</button>
+    </div>
+
+    <div class="mode-selector">
+      <label>Modo de jogo:</label>
+      <div class="mode-buttons">
+        <button class="mode-btn active" id="mode-pvp" data-mode="pvp">👥 2 Jogadores</button>
+        <button class="mode-btn" id="mode-pvc" data-mode="pvc">🤖 vs CPU</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de vitória -->
+  <div class="modal-overlay" id="modal" aria-modal="true" role="dialog" aria-labelledby="modal-title">
+    <div class="modal">
+      <div class="modal-icon" id="modal-icon"></div>
+      <h2 id="modal-title"></h2>
+      <p id="modal-subtitle"></p>
+      <button class="btn btn-primary" id="modal-btn">Jogar Novamente</button>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
